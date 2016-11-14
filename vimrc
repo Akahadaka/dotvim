@@ -32,7 +32,7 @@ endif
 :nmap <leader>M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
 :nmap <leader>m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
 " }}}
-" UI  Layout {{{
+" UI Layout {{{
 :set number                  " show line numbers
 :nmap <leader>l :setlocal number!<CR>
                              " toggle line numbers shortcut
@@ -45,6 +45,10 @@ endif
 :set wrap                    " turn off line wrapping by default
 :nmap <leader>w :setlocal wrap!<CR>:setlocal wrap?<CR>
                              " toggle line wrapping
+" }}}
+" {{{ Navigation
+nnoremap <C-Left> :tabprevious<CR>
+nnoremap <C-Right> :tabnext<CR>
 " }}}
 " Searching {{{
 :set incsearch               " search as characters are entered
@@ -112,6 +116,8 @@ endif
 :autocmd StdinReadPre * let s:std_in=1
 :autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 :autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" NERDTree Tabs Aware Plugin
+map <leader>n <plug>NERDTreeTabsToggle<CR>
 " }}}
 " Syntastic {{{
 
