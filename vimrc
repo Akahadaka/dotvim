@@ -31,7 +31,7 @@ endif
 :nmap <leader>T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
 :nmap <leader>M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
 :nmap <leader>m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
-" }}}
+ " }}}
 " UI Layout {{{
 :set number                  " show line numbers
 :nmap <leader>l :setlocal number!<CR>
@@ -47,8 +47,14 @@ endif
                              " toggle line wrapping
 " }}}
 " {{{ Navigation
-nnoremap <C-Left> :tabprevious<CR>
-nnoremap <C-Right> :tabnext<CR>
+nnoremap [1;6D :tabprevious<CR> 
+                              " CTRL+SHIFT+LEFT navigates to previous tab
+nnoremap [1;6C :tabnext<CR>
+                              " CTRL+SHIFT+RIGHT navigates to next tab
+nnoremap <TAB> <C-W>W
+                              " TAB navigates next pane/buffer/split
+nnoremap <BS> <C-W>w
+                              " BACKSPACE navigates previous pane/buffer/split
 " }}}
 " Searching {{{
 :set incsearch               " search as characters are entered
@@ -117,6 +123,8 @@ nnoremap <C-Right> :tabnext<CR>
 :autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 :autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 " NERDTree Tabs Aware Plugin
+" Set to ON by default
+let g:nerdtree_tabs_open_on_console_startup=1
 map <leader>n <plug>NERDTreeTabsToggle<CR>
 " }}}
 " Syntastic {{{
