@@ -25,3 +25,6 @@
 [submodule "bundle/vim-autoformat"]
 	path = bundle/vim-autoformat
 	url = git@github.com:Chiel92/vim-autoformat.git
+[submodule "bundle/vim-typescript"]
+	path = bundle/vim-typescript
+	url = git@github.com:leafgarland/typescript-vim.git
