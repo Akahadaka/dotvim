@@ -25,6 +25,15 @@ $ git submodule update --init --recursive
 
 Edit ```~/.vim/vimrc``` to change settings
 
+## Manual Intervention
+### Node.js
+
+Vim-Autoformat requires beuatifiers. E.g. You may install the NPM package js-beautify. When installed globally, it provides an executable js-beautify script. As with the Python script, the beautified result is sent to stdout unless otherwise configured.
+
+```
+$ npm -g install js-beautify
+```
+
 ### Mac
 
 The submodule YouCompleteMe may need some additional setup. See: [Valloric/YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
