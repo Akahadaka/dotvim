@@ -47,14 +47,22 @@ endif
 :nmap <leader>w :setlocal wrap!<CR>:setlocal wrap?<CR>
 " toggle line wrapping
 " }}}
+" {{{ UX Key Bindings
+" Copy to clipboard
+:vnoremap <C-C> :w !pbcopy<CR><CR>
+" Paste from clipboard
+:vnoremap <C-C> :r !pbpaste<CR><CR>
+" }}}
 " {{{ Navigation
-nnoremap [1;6D :tabprevious<CR>
+:nnoremap [1;6D :tabprevious<CR>
+:nnoremap <S-BS> :tabprevious<CR> 
 " CTRL+SHIFT+LEFT navigates to previous tab
-nnoremap [1;6C :tabnext<CR>
+:nnoremap [1;6C :tabnext<CR>
+:nnoremap <S-TAB> :tabnext<CR>
 " CTRL+SHIFT+RIGHT navigates to next tab
-nnoremap <TAB> <C-W>W
+:nnoremap <TAB> <C-W>W
 " TAB navigates next pane/buffer/split
-nnoremap <BS> <C-W>w
+:nnoremap <BS> <C-W>w
 " BACKSPACE navigates previous pane/buffer/split
 " }}}
 " Searching {{{
@@ -117,32 +125,46 @@ nnoremap <BS> <C-W>w
 " }}}
 " NERDTree {{{
 " always change cwd to that of open file
-:autocmd BufEnter * lcd %:p:h
+:autocmd BufEnter * silent! lcd %:p:h
 
 " toggle NERDTree
 :nmap <leader>e :NERDTreeToggle<CR>
 
 " open NERDTree automatically
+":autocmd StdinReadPre * let s:std_in=1
 " open a NERDTree automatically when vim starts up if no files were specified
+":autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" change focus to opened file
+":autocmd VimEnter * NERDTree
+":autocmd BufNew * <TAB>
 " open NERDTree automatically when vim starts up on opening a directory
-" and close vim if no files are open
-":autocmd vimenter * NERDTree
-:autocmd StdinReadPre * let s:std_in=1
-:autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 ":autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[
-:autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" and close vim if no files are open
+":autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " NERDTree Tabs Aware Plugin set to ON by default
-let g:nerdtree_tabs_open_on_console_startup=1
+:let g:nerdtree_tabs_open_on_console_startup=1
+:let g:nerdtree_tabs_smart_startup_focus=1
+:let g:nerdtree_tabs_meaningful_tab_names=1
+:let g:nerdtree_tabs_autoclose=1
+:let g:nerdtree_tabs_synchronize_view=1
+:let g:nerdtree_tabs_synchronize_focus=1
+:let g:nerdtree_tabs_startup_cd=1
 
 " toggle NERDTree Tabs
-map <leader>n <plug>NERDTreeTabsToggle<CR>
-" }}}
-" {{{ Autoformat
-noremap <F3> :Autoformat<CR>
-" F3 to Autoformat
-au BufWrite * :Autoformat
+:nmap <leader>n <plug>NERDTreeTabsToggle<CR>
+"  }}}
+"  {{{ Autoformat
+:noremap <F3> :Autoformat<CR>
+" Fix for YAML formatting
+:autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+:autocmd FileType typescript setlocal ts=2 sts=2 sw=2 expandtab
+"  to Autoformat
+
 " Autoformat on save
+" Too many incompatibilities, e.g. YAML
+" Should not autoformat on save
+" :au BufWrite * :Autoformat
 " }}}
 " Syntastic {{{
 
@@ -163,7 +185,7 @@ au BufWrite * :Autoformat
 augroup configgroup
         autocmd!
         autocmd VimEnter * highlight clear SignColumn
-        autocmd VimEnter * NERDTree
+"        autocmd VimEnter * NERDTree
         autocmd BufWritePre *.php,*.py,*.js,*.txt,*.hs,*.java,*.md
                                 \:call <SID>StripTrailingWhitespaces()
         autocmd FileType java setlocal noexpandtab
