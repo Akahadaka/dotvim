@@ -48,10 +48,20 @@ endif
 " toggle line wrapping
 " }}}
 " {{{ UX Key Bindings
+" Alternative Insert Mode when pressing Backspace
+:nnoremap <BS> i<Right><BS>
+" Save document
+:noremap  <silent> <D-s>    :update<CR>
+:vnoremap <silent> <D-s>    <C-c>:update<CR>
+:inoremap <silent> <D-s>    <C-o>:update<CR>
+" Save document using F6
+:noremap  <silent> <F6>    :update<CR>
+:vnoremap <silent> <F6>    <C-c>:update<CR>
+:inoremap <silent> <F6>    <C-o>:update<CR>
 " Copy to clipboard
-:vnoremap <C-C> :w !pbcopy<CR><CR>
+:vnoremap <C-c> :w !pbcopy<CR><CR>
 " Paste from clipboard
-:vnoremap <C-C> :r !pbpaste<CR><CR>
+:vnoremap <C-v> :r !pbpaste<CR><CR>
 " }}}
 " {{{ Navigation
 :nnoremap [1;6D :tabprevious<CR>
@@ -62,7 +72,7 @@ endif
 " CTRL+SHIFT+RIGHT navigates to next tab
 :nnoremap <TAB> <C-W>W
 " TAB navigates next pane/buffer/split
-:nnoremap <BS> <C-W>w
+:nnoremap <C-BS> <C-W>w
 " BACKSPACE navigates previous pane/buffer/split
 " }}}
 " Searching {{{
