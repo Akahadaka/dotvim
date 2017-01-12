@@ -164,6 +164,10 @@ endif
 " toggle NERDTree Tabs
 :nmap <leader>n <plug>NERDTreeTabsToggle<CR>
 "  }}}
+" {{{ AutoComplete
+" Using NeoComplete
+:let g:neocomplete#enable_at_startup = 1
+" }}}
 "  {{{ Autoformat
 :noremap <F3> :Autoformat<CR>
 " Fix for YAML formatting
