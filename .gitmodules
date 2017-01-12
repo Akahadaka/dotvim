@@ -40,3 +40,6 @@
 [submodule "bundle/vim-goldenview"]
 	path = bundle/vim-goldenview
 	url = git@github.com:zhaocai/GoldenView.Vim.git
+[submodule "bundle/vim-neosnippet-snippets"]
+	path = bundle/vim-neosnippet-snippets
+	url = git@github.com:Shougo/neosnippet-snippets.git
