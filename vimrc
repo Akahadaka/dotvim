@@ -44,12 +44,16 @@ endif
 :set wildmenu                " visual autocomplete for command menu
 :set lazyredraw              " redraw only when we need to
 :set showmatch               " highlight matching [{()}]
-:filetype indent on          " load filetype-specific indent files
-:set nowrap                    " turn off line wrapping by default
+:filetype plugin indent on   " load filetype-specific indent files
+:set nowrap                  " turn off line wrapping by default
 :nmap <leader>w :setlocal wrap!<CR>:setlocal wrap?<CR>
 " toggle line wrapping
+" change cursors
+:let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+:let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+:let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " }}}
-" {{{ UX Key Bindings
+" {{{ UX Key Bind ings
 " Alternative Insert Mode when pressing Backspace
 :nnoremap <BS> i<BS>
 " Save document
@@ -64,6 +68,8 @@ endif
 :vnoremap <C-c> :w !pbcopy<CR><CR>
 " Paste from clipboard
 :vnoremap <C-v> :r !pbpaste<CR><CR>
+" Set paste / nopaste mode automatically
+:inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 " }}}
 " {{{ Navigation
 :nnoremap [1;6D :tabprevious<CR>
@@ -266,7 +272,7 @@ endif
 " Vim sessions default to capturing all global options
 " this can cause other problems
 " }}}
-" Tmux {{{
+" Tmux {{{ 
 
 " }}}
 " MacVim {{{
@@ -337,6 +343,28 @@ function! <SID>StripTrailingWhitespaces()
         %s/\s\+$//e
         let @/=_s
         call cursor(l, c)
-endfunction
+endfunc
+
+" Set paste / nopaste automatically
+" Includes support for TMUX
+function! WrapForTmux(s)
+  if !exists('$TMUX')
+    return a:s
+  endif
+
+  let tmux_start = "\<Esc>Ptmux;"
+  let tmux_end = "\<Esc>\\"
+
+  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
+endfunc
+
+let &t_SI .= WrapForTmux("\<Esc>[?2004h")
+let &t_EI .= WrapForTmux("\<Esc>[?2004l")
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunc
 " }}}
 " vim:foldmethod=marker:foldlevel=0
