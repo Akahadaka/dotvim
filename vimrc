@@ -22,6 +22,8 @@ endif
 " }}}
 " Misc {{{
 :syntax enable               " enable syntax processing
+" reload file on external changes
+:autocmd WinEnter * checktime
 " }}}
 " Spaces & Tabs {{{
 :set tabstop=2               " number of visual spaces per TAB
@@ -49,7 +51,7 @@ endif
 " }}}
 " {{{ UX Key Bindings
 " Alternative Insert Mode when pressing Backspace
-:nnoremap <BS> i<Right><BS>
+:nnoremap <BS> i<BS>
 " Save document
 :noremap  <silent> <D-s>    :update<CR>
 :vnoremap <silent> <D-s>    <C-c>:update<CR>
@@ -87,9 +89,9 @@ endif
 :set foldenable              " enable folding
 :set foldlevelstart=10       " open most folds by default
 :set foldnestmax=10          " 10 nested fold max
-:nnoremap <space> za
 " space open/closes folds
-:set foldmethod=indent       " fold based on indent level
+:nnoremap <space> za
+:set foldmethod=syntax       " fold based on indent level
 " }}}
 " Line Shortcuts {{{
 :nnoremap j gj
@@ -118,8 +120,11 @@ endif
 " highlight last inserted text
 " }}}
 " Leader Shortcuts {{{
-:nnoremap <leader>u :GundoToggle<CR>
 " toggle gundo
+:nnoremap <leader>u :GundoToggle<CR>
+" toggle custom function  DiffMode
+nnoremap <silent> <Leader>d :call ToggleDiffMode()<CR>
+
 " }}}
 " Airline {{{
 
@@ -299,6 +304,15 @@ augroup END
 :set writebackup
 " }}}
 " Custom Functions {{{
+" toggle diff mode on and off
+function! ToggleDiffMode()
+        if (&diff)
+                diffoff
+        else
+                diffthis
+        endif
+endfunc
+
 " toggle between number and relativenumber
 function! ToggleNumber()
         if(&relativenumber == 1)
