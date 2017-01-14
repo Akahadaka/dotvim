@@ -43,3 +43,6 @@
 [submodule "bundle/vim-neosnippet-snippets"]
 	path = bundle/vim-neosnippet-snippets
 	url = git@github.com:Shougo/neosnippet-snippets.git
+[submodule "bundle/vim-emmet"]
+	path = bundle/vim-emmet
+	url = git@github.com:mattn/emmet-vim.git

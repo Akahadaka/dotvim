@@ -255,6 +255,10 @@ endif
 " }}}
 " Syntastic {{{
 
+"  }}}
+" Emmet {{{
+:let g:user_emmet_install_global = 0
+:autocmd FileType html,css EmmetInstall
 " }}}
 " Launch Config {{{
 :set modelines=1                " use modeline
