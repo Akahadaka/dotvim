@@ -53,9 +53,11 @@ endif
 :let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 :let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " }}}
-" {{{ UX Key Bind ings
+" {{{ UX Key Bindings 
 " Alternative Insert Mode when pressing Backspace
 :nnoremap <BS> i<BS>
+" Another alternative Insert mode when pressing Enter
+:nnoremap <CR> o
 " Save document
 :noremap  <silent> <D-s>    :update<CR>
 :vnoremap <silent> <D-s>    <C-c>:update<CR>
@@ -144,7 +146,7 @@ nnoremap <silent> <Leader>d :call ToggleDiffMode()<CR>
 :let g:ctrlp_dotfiles = 0
 :let g:ctrlp_switch_buffer = 0
 " }}}
-" NERDTree {{{
+" NERDTree {{{  
 " always change cwd to that of open file
 :autocmd BufEnter * silent! lcd %:p:h
 
